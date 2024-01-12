@@ -1,17 +1,47 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import SearchHome from "./components/pages/search-home-page/SearchHome";
+import SchoolList from "./components/pages/school-map-list-page/SchoolList";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import SchoolDetailPage from "./components/pages/school-detail-page/SchoolDetailPage";
+import { Navbar } from "./components/nav-bar/NavBar";
+import { NotFoundPage } from "./components/pages/not-found-page/NotFoundPage";
+
+const HeaderLayout = () => (
+  <>
+    <header>
+      <Navbar />
+    </header>
+    <Outlet />
+  </>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const router = createBrowserRouter([
+  {
+    element: <HeaderLayout />,
+    children: [
+      {
+        path: "/",
+        element: <SearchHome />,
+      },
+      {
+        path: "/etablissements",
+        element: <SchoolList />,
+      },
+      {
+        path: "/etablissements/details/:uuid",
+        element: <SchoolDetailPage />,
+      },
+    ],
+    errorElement: <NotFoundPage />,
+  },
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);

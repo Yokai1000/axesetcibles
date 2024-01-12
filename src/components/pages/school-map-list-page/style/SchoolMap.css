@@ -1,0 +1,11 @@
+.map-menu {
+    flex: 2 1;
+    width: 100vw;
+    height: auto;
+    display: grid;
+}
+
+.map-marker {
+    position: absolute;
+    transform: translateZ(0) translate(-50%, -100%)
+}
